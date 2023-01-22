@@ -1,4 +1,4 @@
-﻿using BookManager.Entities;
+﻿using BookManager.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookManager

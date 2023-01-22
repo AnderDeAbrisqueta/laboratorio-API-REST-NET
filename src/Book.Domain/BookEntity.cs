@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace BookManager.Entities
+﻿namespace BookManager.Domain
 {
     public class BookEntity
     {
