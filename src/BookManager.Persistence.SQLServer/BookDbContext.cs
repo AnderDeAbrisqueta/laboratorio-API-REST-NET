@@ -1,19 +1,25 @@
-﻿using BookManager.Domain;
+﻿using BookManager.Application;
+using BookManager.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookManager
+namespace BookManager.Persistence.SQLServer
 {
     public class BookDbContext
-        : DbContext
+        : DbContext, IBookDBContext
     {
-        
-        public BookDbContext(DbContextOptions<BookDbContext> options) 
+
+        public BookDbContext(DbContextOptions<BookDbContext> options)
             : base(options)
         {
 
         }
         public DbSet<BookEntity> Books { get; set; } = null!;
         public DbSet<AuthorEntity> Authors { get; set; } = null!;
+
+        public Task<int> SaveChangesAsync()
+        {
+            return base.SaveChangesAsync();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,7 +30,7 @@ namespace BookManager
                 .HasOne(a => a.Author)
                 .WithMany(b => b.Books)
                 .HasForeignKey(a => a.AuthorId)
-                .OnDelete(DeleteBehavior.Restrict);      
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

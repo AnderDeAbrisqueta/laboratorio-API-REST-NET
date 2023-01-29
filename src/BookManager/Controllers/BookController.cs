@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookManager.Controllers
 {
     [Route("api/[controller]")]
-    public class BookController : Controller
+    public class BookController : ControllerBase
     {
         [HttpGet]
         public IActionResult Healhth()
