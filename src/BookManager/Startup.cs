@@ -1,4 +1,5 @@
-﻿using BookManager.Extensions;
+﻿using BookManager.Application;
+using BookManager.Extensions;
 using BookManager.Persistence.SQLServer;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,7 @@ namespace BookManager
             {
                 options.UseSqlServer(booksConnectionString);
             })
+            .AddScoped<IBookDBContext, BookDBContext>()
             .AddOpenApi()
             .AddControllers();
         }

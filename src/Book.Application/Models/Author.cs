@@ -2,15 +2,10 @@
 {
     public class Author
     {
-        public int Id { get; }
-        public string Name { get; } 
-        public string LastName { get; }
-
-        public Author(int id, string name, string lastName) 
-        { 
-            Id = id;
-            Name = name;
-            LastName = lastName;
-        }
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public DateTime Birth { get; set; }
+        public string CountryCode { get; set; } = string.Empty;
     }
 }
