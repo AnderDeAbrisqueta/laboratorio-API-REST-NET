@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7869BD74-1DD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManager", "src\BookManager\BookManager.csproj", "{2FC6D574-C329-45D2-8981-A0F061EC62B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManager.Application", "src\Book.Application\BookManager.Application.csproj", "{374FE006-CBC8-4572-A3D6-CF9506BF75AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManager.Application", "src\Book.Application\BookManager.Application.csproj", "{374FE006-CBC8-4572-A3D6-CF9506BF75AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManager.Domain", "src\Book.Domain\BookManager.Domain.csproj", "{F18B834D-D2B3-49B8-BD5D-D07E657BCBD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManager.Domain", "src\Book.Domain\BookManager.Domain.csproj", "{F18B834D-D2B3-49B8-BD5D-D07E657BCBD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManager.Persistence.SQLServer", "src\BookManager.Persistence.SQLServer\BookManager.Persistence.SQLServer.csproj", "{501701DA-AA19-49BE-B2DD-BC4C956797BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManager.Persistence.SQLServer", "src\BookManager.Persistence.SQLServer\BookManager.Persistence.SQLServer.csproj", "{501701DA-AA19-49BE-B2DD-BC4C956797BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

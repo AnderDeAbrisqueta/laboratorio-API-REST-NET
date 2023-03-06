@@ -24,7 +24,7 @@ namespace BookManager
             {
                 options.UseSqlServer(booksConnectionString);
             })
-            .AddScoped<IBookDBContext, BookDBContext>()
+            .AddScoped<IBookDBContext, BookDbContext>()
             .AddOpenApi()
             .AddControllers();
         }
