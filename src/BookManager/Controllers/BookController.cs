@@ -1,9 +1,10 @@
-﻿using BookManager.Application.Models;
-using BookManager.Contracts;
+﻿using BookManager.Application;
+using BookManager.Application.Models;
 using BookManager.Domain;
 using BookManager.Persistence.SQLServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace BookManager.Controllers
 {
@@ -20,7 +21,7 @@ namespace BookManager.Controllers
         [HttpGet]
         public ActionResult <List<BookEntity>> Get()
         {
-            return _bookDBContext.GetBooks();
+            return Ok();
         }
         
     }

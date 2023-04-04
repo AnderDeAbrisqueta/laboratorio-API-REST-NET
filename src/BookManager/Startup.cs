@@ -1,4 +1,4 @@
-﻿using BookManager.Application.Contracts;
+﻿using BookManager.Application;
 using BookManager.Extensions;
 using BookManager.Persistence.SQLServer;
 using Microsoft.EntityFrameworkCore;

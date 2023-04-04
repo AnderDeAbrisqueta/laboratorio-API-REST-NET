@@ -1,11 +1,14 @@
 ﻿
 using BookManager.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookManager.Application.Models
 {
     public class Book
     {
-        public int Id { get; }
+        [Required]
+        public int Id { get; init; }
+        [Required]
         public string Title { get; } = string.Empty;
         public string Description { get; } = string.Empty;
         public DateTime PublishedOn { get; }

@@ -1,4 +1,4 @@
-﻿using BookManager.Application.Contracts;
+﻿using BookManager.Application;
 using BookManager.Domain;
 using Microsoft.EntityFrameworkCore;
 

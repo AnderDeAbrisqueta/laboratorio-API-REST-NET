@@ -1,6 +1,6 @@
 ﻿using BookManager.Domain;
 using Microsoft.EntityFrameworkCore;
-namespace BookManager.Application.Contracts
+namespace BookManager.Application
 {
     public interface IBookDBContext
     {
