@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookManager.Persistence.SQLServer.Migrations
 {
     [DbContext(typeof(BookDbContext))]
-    [Migration("20230404180117_inicial")]
-    partial class inicial
+    [Migration("20230406194126_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,18 +27,19 @@ namespace BookManager.Persistence.SQLServer.Migrations
 
             modelBuilder.Entity("BookManager.Domain.AuthorEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AuthorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"));
 
                     b.Property<DateTime>("Birth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CountryCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Country_Code");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -48,18 +49,18 @@ namespace BookManager.Persistence.SQLServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("AuthorId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("tb_Autor");
                 });
 
             modelBuilder.Entity("BookManager.Domain.BookEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BookId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"));
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
@@ -69,17 +70,18 @@ namespace BookManager.Persistence.SQLServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PublishedOn")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Published_On");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("BookId");
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Books");
+                    b.ToTable("tb_Book");
                 });
 
             modelBuilder.Entity("BookManager.Domain.BookEntity", b =>

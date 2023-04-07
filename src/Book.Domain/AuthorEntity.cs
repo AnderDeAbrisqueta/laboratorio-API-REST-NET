@@ -1,14 +1,22 @@
-﻿namespace BookManager.Domain
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BookManager.Domain
 {
+    [Table("tb_Author")]
     public class AuthorEntity
     {
-        public int Id { get; set; }
+        [Key]
+        public int AuthorId { get; set; }
+        [Required]
         public string Name { get; set; } = string.Empty;
+        [Required]
         public string LastName { get; set; } = string.Empty;
         public DateTime Birth { get; set; }
-        public string CountryCode { get; set; } = string.Empty;   
+        [Column("Country_Code")]
+        public string CountryCode { get; set; } = string.Empty;
 
         // Navigation properties
-        public List<BookEntity> Books { get; set; } = new();
+        public List<BookEntity> Books { get; set; } = null!;
     }
 }
