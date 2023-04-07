@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookManager.Persistence.SQLServer.Migrations
 {
     [DbContext(typeof(BookDbContext))]
-    [Migration("20230406194126_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230407210204_firstMigration")]
+    partial class firstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,7 +51,7 @@ namespace BookManager.Persistence.SQLServer.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("tb_Autor");
+                    b.ToTable("tb_Author");
                 });
 
             modelBuilder.Entity("BookManager.Domain.BookEntity", b =>

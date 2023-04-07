@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BookManager.Persistence.SQLServer.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class firstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "tb_Autor",
+                name: "tb_Author",
                 columns: table => new
                 {
                     AuthorId = table.Column<int>(type: "int", nullable: false)
@@ -24,7 +24,7 @@ namespace BookManager.Persistence.SQLServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_Autor", x => x.AuthorId);
+                    table.PrimaryKey("PK_tb_Author", x => x.AuthorId);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,9 +42,9 @@ namespace BookManager.Persistence.SQLServer.Migrations
                 {
                     table.PrimaryKey("PK_tb_Book", x => x.BookId);
                     table.ForeignKey(
-                        name: "FK_tb_Book_tb_Autor_AuthorId",
+                        name: "FK_tb_Book_tb_Author_AuthorId",
                         column: x => x.AuthorId,
-                        principalTable: "tb_Autor",
+                        principalTable: "tb_Author",
                         principalColumn: "AuthorId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -62,7 +62,7 @@ namespace BookManager.Persistence.SQLServer.Migrations
                 name: "tb_Book");
 
             migrationBuilder.DropTable(
-                name: "tb_Autor");
+                name: "tb_Author");
         }
     }
 }

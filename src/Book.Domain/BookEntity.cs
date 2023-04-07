@@ -8,9 +8,7 @@ namespace BookManager.Domain
     {
         [Key]
         public int BookId { get; set; }
-        [Required]
         public string Title { get; set; } = string.Empty;
-        [Required]
         public string Description { get; set; } = string.Empty;
         [Column("Published_On")]
         public DateTime PublishedOn { get; set; }
