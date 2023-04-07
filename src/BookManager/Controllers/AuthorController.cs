@@ -16,46 +16,99 @@ namespace BookManager.Controllers
         }
         // GET: api/<AuthorController>
         [HttpGet]
-        public IEnumerable<AuthorEntity> Get()
+        public async Task<ActionResult<IEnumerable<AuthorEntity>>> GetAuthor()
         {
-            return _authorDBContext.Authors;
+            if(_authorDBContext.Authors == null)
+            {
+                return NotFound();
+            }
+            return await _authorDBContext.Authors.ToListAsync();
         }
 
         // GET api/<AuthorController>/5
         [HttpGet("{id}")]
-        public AuthorEntity Get(int id)
+        public async Task<ActionResult<AuthorEntity>> GetAuthor(int id)
         {
-            return  _authorDBContext.Authors.SingleOrDefault(x => x.AuthorId == id);
+            if (_authorDBContext.Authors == null)
+            {
+                return NotFound();
+            }
+            var author = await _authorDBContext.Authors.FindAsync(id);
+
+            if (author == null)
+            {
+                return NotFound();
+            }
+
+            return author;
         }
 
         // POST api/<AuthorController>
         [HttpPost]
-        public void Post([FromBody] AuthorEntity author)
+        public async Task<ActionResult<AuthorEntity>> PostAuthor(AuthorEntity author) 
         {
             _authorDBContext.Authors.Add(author);
-            _authorDBContext.SaveChangesAsync();
+            await _authorDBContext.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetAuthor), new { id = author.AuthorId }, author);
         }
 
         // PUT api/<AuthorController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] AuthorEntity author)
+        public async Task<IActionResult> PutAuthor (int id, AuthorEntity author)
         {
+            if (id != author.AuthorId)
+            {
+                return BadRequest();
+            }
+
             author.AuthorId = id;
             _authorDBContext.Authors.Update(author);
-            _authorDBContext.SaveChangesAsync();
+
+            try
+            {
+                await _authorDBContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AuthorAvailable(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+
+            }
+
+            return Ok();
+        }
+
+        private bool AuthorAvailable (int id) 
+        {
+            return (_authorDBContext.Authors?.Any(x => x.AuthorId == id)).GetValueOrDefault();
         }
 
         // DELETE api/<AuthorController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteAuthor(int id)
         {
-            var item = _authorDBContext.Authors.FirstOrDefault(x => x.AuthorId ==id);
-
-            if (item != null)
+            if (_authorDBContext.Authors == null)
             {
-                _authorDBContext.Authors.Remove(item);
-                _authorDBContext.SaveChangesAsync();
+                return NotFound();
             }
+
+            var author = await _authorDBContext.Authors.FindAsync(id);
+
+            if (author == null)
+            {
+                return NotFound();
+            }
+
+            _authorDBContext.Authors.Remove(author);
+            await _authorDBContext.SaveChangesAsync();
+            return Ok();
         }
     }
 }
