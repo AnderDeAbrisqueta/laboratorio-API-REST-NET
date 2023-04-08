@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookManager.Persistence.SQLServer.Migrations
 {
     [DbContext(typeof(BookDbContext))]
-    [Migration("20230407230923_firstMigration")]
-    partial class firstMigration
+    [Migration("20230408141259_modifiedAuthorEntityBookEntity")]
+    partial class modifiedAuthorEntityBookEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,7 @@ namespace BookManager.Persistence.SQLServer.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"));
 
                     b.Property<DateTime>("Birth")
+                        .HasMaxLength(25)
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CountryCode")
@@ -70,6 +71,7 @@ namespace BookManager.Persistence.SQLServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PublishedOn")
+                        .HasMaxLength(25)
                         .HasColumnType("datetime2")
                         .HasColumnName("Published_On");
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BookManager.Persistence.SQLServer.Migrations
 {
     /// <inheritdoc />
-    public partial class firstMigration : Migration
+    public partial class firstMigritation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,7 @@ namespace BookManager.Persistence.SQLServer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Birth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Birth = table.Column<DateTime>(type: "datetime2", maxLength: 25, nullable: false),
                     CountryCode = table.Column<string>(name: "Country_Code", type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -35,8 +35,8 @@ namespace BookManager.Persistence.SQLServer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PublishedOn = table.Column<DateTime>(name: "Published_On", type: "datetime2", nullable: false),
-                    AuthorId = table.Column<int>(type: "int", nullable: false)
+                    PublishedOn = table.Column<DateTime>(name: "Published_On", type: "datetime2", maxLength: 25, nullable: false),
+                    AuthorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

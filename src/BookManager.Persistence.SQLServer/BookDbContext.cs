@@ -29,7 +29,6 @@ namespace BookManager.Persistence.SQLServer
                 .Entity<BookEntity>()
                 .HasOne(a => a.Author)
                 .WithMany(b => b.Books)
-                .HasForeignKey(a => a.AuthorId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

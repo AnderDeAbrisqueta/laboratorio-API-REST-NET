@@ -10,6 +10,7 @@ namespace BookManager.Domain
         public int AuthorId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
+        [MaxLength(25)]
         public DateTime Birth { get; set; }
         [Column("Country_Code")]
         public string CountryCode { get; set; } = string.Empty;
