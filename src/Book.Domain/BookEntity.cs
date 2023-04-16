@@ -7,18 +7,18 @@ namespace BookManager.Domain
     public class BookEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookId { get; set; }
         [Required]
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         [Column("Published_On")]
-        [MaxLength(25)]
         public DateTime PublishedOn { get; set; }
         [ForeignKey("AuthorEntity")]
         public int AuthorId { get; set; }
 
         // Navigation properties
-        public AuthorEntity Author { get; set; } = null!;
+        public AuthorEntity? Author { get; set; }
 
     }
 }

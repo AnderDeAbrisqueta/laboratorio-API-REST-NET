@@ -26,8 +26,6 @@ namespace BookManager.Persistence.SQLServer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
-
             modelBuilder.ApplyConfiguration(new FluentAthorEntityConfig());
             modelBuilder.ApplyConfiguration(new FluentBookEntityConfig());
         }

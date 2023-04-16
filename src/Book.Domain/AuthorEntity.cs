@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace BookManager.Domain
 {
@@ -7,17 +10,17 @@ namespace BookManager.Domain
     public class AuthorEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AuthorId { get; set; }
         [Required]
         public string Name { get; set; } = string.Empty;
         [Required]
         public string LastName { get; set; } = string.Empty;
-        [MaxLength(25)]
         public DateTime Birth { get; set; }
         [Column("Country_Code")]
         public string CountryCode { get; set; } = string.Empty;
 
         // Navigation properties
-        public List<BookEntity> Books { get; set; } = null!;
+        public List<BookEntity>? Books { get; set; }
     }
 }

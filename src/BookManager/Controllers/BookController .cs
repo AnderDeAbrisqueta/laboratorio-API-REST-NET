@@ -45,7 +45,7 @@ namespace BookManager.Controllers
 
         // POST api/<BookController>
         [HttpPost]
-        public async Task<ActionResult<BookEntity>> PostBook(BookEntity book)
+        public async Task<ActionResult<BookEntity>> PostBook([FromBody] BookEntity book)
         {
             _bookDBContext.Books.Add(book);
             await _bookDBContext.SaveChangesAsync();
@@ -55,7 +55,7 @@ namespace BookManager.Controllers
 
         // PUT api/<BookController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBook(int id, BookEntity book)
+        public async Task<IActionResult> PutBook(int id,  [FromBody] BookEntity book)
         {
             if (id != book.BookId)
             {
