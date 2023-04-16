@@ -3,22 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookManager.Domain
 {
-    [Table("tb_Book")]
-    public class BookEntity
+    public class Fluent_BookEntity
     {
-        [Key]
+        
         public int BookId { get; set; }
-        [Required]
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        [Column("Published_On")]
-        [MaxLength(25)]
         public DateTime PublishedOn { get; set; }
-        [ForeignKey("AuthorEntity")]
         public int AuthorId { get; set; }
-
-        // Navigation properties
-        public AuthorEntity Author { get; set; } = null!;
+        public Fluent_AuthorEntity Fluent_Author { get; set; } = null!;
 
     }
 }

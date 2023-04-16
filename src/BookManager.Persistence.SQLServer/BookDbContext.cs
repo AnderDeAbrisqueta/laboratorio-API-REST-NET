@@ -1,5 +1,6 @@
 ﻿using BookManager.Application;
 using BookManager.Domain;
+using BookManager.Persistence.SQLServer.FluentConfig;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookManager.Persistence.SQLServer
@@ -15,6 +16,8 @@ namespace BookManager.Persistence.SQLServer
         }
         public DbSet<BookEntity> Books { get; set; } = null!;
         public DbSet<AuthorEntity> Authors { get; set; } = null!;
+        public DbSet<Fluent_BookEntity> Fluent_Books { get; set; } = null!;
+        public DbSet<Fluent_AuthorEntity> Fluent_Authors { get; set; } = null!;
 
         public Task<int> SaveChangesAsync()
         {
@@ -23,13 +26,10 @@ namespace BookManager.Persistence.SQLServer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            //base.OnModelCreating(modelBuilder);
 
-            modelBuilder
-                .Entity<BookEntity>()
-                .HasOne(a => a.Author)
-                .WithMany(b => b.Books)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.ApplyConfiguration(new FluentAthorEntityConfig());
+            modelBuilder.ApplyConfiguration(new FluentBookEntityConfig());
         }
     }
 }

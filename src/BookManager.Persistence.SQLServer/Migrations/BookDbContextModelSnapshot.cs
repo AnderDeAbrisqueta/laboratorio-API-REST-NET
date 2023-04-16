@@ -83,20 +83,95 @@ namespace BookManager.Persistence.SQLServer.Migrations
                     b.ToTable("tb_Book");
                 });
 
+            modelBuilder.Entity("BookManager.Domain.Fluent_AuthorEntity", b =>
+                {
+                    b.Property<int>("AuthorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"));
+
+                    b.Property<DateTime>("Birth")
+                        .HasMaxLength(25)
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AuthorId");
+
+                    b.ToTable("Fluent_Authors");
+                });
+
+            modelBuilder.Entity("BookManager.Domain.Fluent_BookEntity", b =>
+                {
+                    b.Property<int>("BookId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"));
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublishedOn")
+                        .HasMaxLength(25)
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BookId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Fluent_Books");
+                });
+
             modelBuilder.Entity("BookManager.Domain.BookEntity", b =>
                 {
                     b.HasOne("BookManager.Domain.AuthorEntity", "Author")
                         .WithMany("Books")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Author");
                 });
 
+            modelBuilder.Entity("BookManager.Domain.Fluent_BookEntity", b =>
+                {
+                    b.HasOne("BookManager.Domain.Fluent_AuthorEntity", "Fluent_Author")
+                        .WithMany("Fluent_Books")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Fluent_Author");
+                });
+
             modelBuilder.Entity("BookManager.Domain.AuthorEntity", b =>
                 {
                     b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("BookManager.Domain.Fluent_AuthorEntity", b =>
+                {
+                    b.Navigation("Fluent_Books");
                 });
 #pragma warning restore 612, 618
         }
