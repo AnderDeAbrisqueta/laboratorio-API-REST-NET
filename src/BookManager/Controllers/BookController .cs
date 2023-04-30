@@ -1,4 +1,6 @@
-﻿using BookManager.Application;
+﻿using AutoMapper;
+using BookManager.Application;
+using BookManager.Application.Models;
 using BookManager.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,53 +12,53 @@ namespace BookManager.Controllers
     public class BookController : ControllerBase
     {
         private readonly IBookDBContext _bookDBContext;
-        public BookController(IBookDBContext bookDBContext)
+        private readonly IMapper _mapper;
+        public BookController(IBookDBContext bookDBContext, IMapper mapper)
         {
             _bookDBContext = bookDBContext;
+            _mapper = mapper;
         }
         // GET: api/<BookController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookEntity>>> GetBook()
+        public ActionResult<List<BookEntity>> GetBooks()
         {
-            if(_bookDBContext.Books == null)
-            {
-                return NotFound();
-            }
-            return await _bookDBContext.Books.ToListAsync();
+            return Ok(_bookDBContext.Books.Select(book => _mapper.Map<BookDto>(book)));
         }
 
         // GET api/<BookController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BookEntity>> GetBook(int id)
+        public async Task<ActionResult<BookDto>> GetBook(int id)
         {
             if (_bookDBContext.Books == null)
             {
                 return NotFound();
             }
-            var book = await _bookDBContext.Books.FindAsync();
+            var book = await _bookDBContext.Books.FindAsync(id);
 
             if (book == null)
             {
                 return NotFound();
             }
 
-            return book;
+            return _mapper.Map<BookDto>(book); ;
         }
 
         // POST api/<BookController>
         [HttpPost]
-        public async Task<ActionResult<BookEntity>> PostBook([FromBody] BookEntity book)
+        public async Task<ActionResult<List<BookEntity>>> AddBook(BookDto newBook)
         {
+            var book = _mapper.Map<BookEntity>(newBook);
             _bookDBContext.Books.Add(book);
             await _bookDBContext.SaveChangesAsync();
+            return Ok(_bookDBContext.Books.Select(book => _mapper.Map<BookDto>(book)));
 
-            return CreatedAtAction(nameof(GetBook), new { id = book.BookId }, book);
         }
 
         // PUT api/<BookController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBook(int id,  [FromBody] BookEntity book)
+        public async Task<IActionResult> UpdateBook(int id, BookDto updateBook)
         {
+            var book = _mapper.Map<BookEntity>(updateBook);
             if (id != book.BookId)
             {
                 return BadRequest();
@@ -82,7 +84,7 @@ namespace BookManager.Controllers
 
             }
 
-            return Ok();
+            return Ok(_bookDBContext.Books.Select(book => _mapper.Map<BookDto>(book)));
         }
 
         private bool BookAvailable(int id)

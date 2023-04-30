@@ -1,4 +1,6 @@
-﻿using BookManager.Application;
+﻿using AutoMapper;
+using BookManager.Application;
+using BookManager.Application.Models;
 using BookManager.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,24 +12,23 @@ namespace BookManager.Controllers
     public class AuthorController : ControllerBase
     {
         private readonly IBookDBContext _authorDBContext;
-        public AuthorController(IBookDBContext authorDBContext)
+        private readonly IMapper _mapper;
+        public AuthorController(IBookDBContext authorDBContext, IMapper mapper)
         {
             _authorDBContext = authorDBContext;
+            _mapper = mapper;
         }
         // GET: api/<AuthorController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AuthorEntity>>> GetAuthor()
+        public ActionResult<List<AuthorEntity>> GetAuthors()
         {
-            if(_authorDBContext.Authors == null)
-            {
-                return NotFound();
-            }
-            return await _authorDBContext.Authors.ToListAsync();
+            return Ok(_authorDBContext.Authors.Select(author => _mapper.Map<AuthorDto>(author)));
         }
 
         // GET api/<AuthorController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<AuthorEntity>> GetAuthor(int id)
+
+        public async Task<ActionResult<AuthorDto>> GetAuthor(int id)
         {
             if (_authorDBContext.Authors == null)
             {
@@ -40,23 +41,26 @@ namespace BookManager.Controllers
                 return NotFound();
             }
 
-            return author;
+            return _mapper.Map<AuthorDto>(author);
         }
 
         // POST api/<AuthorController>
         [HttpPost]
-        public async Task<ActionResult<AuthorEntity>> PostAuthor([FromBody] AuthorEntity author)
+       public async Task <ActionResult<List<AuthorEntity>>> AddAuthor(AuthorDto newAuthor)
         {
+            var author = _mapper.Map<AuthorEntity>(newAuthor);
             _authorDBContext.Authors.Add(author);
             await _authorDBContext.SaveChangesAsync();
+            return Ok(_authorDBContext.Authors.Select(author => _mapper.Map<AuthorDto>(author)));
 
-            return CreatedAtAction(nameof(GetAuthor), new { id = author.AuthorId }, author);
         }
 
         // PUT api/<AuthorController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAuthor(int id, [FromBody] AuthorEntity author)
+
+        public async Task<IActionResult> UpdateAuthor(int id, AuthorDto updateAuthor)
         {
+            var author = _mapper.Map<AuthorEntity>(updateAuthor);
             if (id != author.AuthorId)
             {
                 return BadRequest();
@@ -82,7 +86,7 @@ namespace BookManager.Controllers
 
             }
 
-            return Ok();
+            return Ok(_authorDBContext.Authors.Select(author => _mapper.Map<AuthorDto>(author)));
         }
 
         private bool AuthorAvailable (int id) 

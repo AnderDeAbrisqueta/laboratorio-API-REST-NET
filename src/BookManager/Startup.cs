@@ -1,4 +1,5 @@
 ﻿using BookManager.Application;
+using BookManager.Application.Helpers;
 using BookManager.Extensions;
 using BookManager.Persistence.SQLServer;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,7 @@ namespace BookManager
             {
                 c.SwaggerDoc("v2", new OpenApiInfo { Title = "BookManager", Version = "v2" });
             });
+            services.AddAutoMapper(typeof(ApplicationMappers));
         }
 
         // Middleware pipeline

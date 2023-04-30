@@ -1,24 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-
-namespace BookManager.Domain
+namespace BookManager.Application.Models
 {
-    [Table("tb_Author")]
-    public class AuthorEntity
+    public class AuthorDto
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AuthorId { get; set; }
-        [Required]
         public string Name { get; set; } = string.Empty;
-        [Required]
         public string LastName { get; set; } = string.Empty;
         public DateTime Birth { get; set; }
-        [Column("Country_Code")]
         public string CountryCode { get; set; } = string.Empty;
-
-        // Navigation properties
-        public List<BookEntity>? Books { get; set; }
     }
 }
